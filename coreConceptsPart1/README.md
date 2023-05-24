@@ -32,7 +32,7 @@ erDiagram
     TASK
     FILTERS
 
-    TASK ||--|| FILTERS: contains
+    STATE ||--|| FILTERS: contains
     STATE ||--o{ TASK: contains
     
 
