@@ -25,8 +25,15 @@ this todo app is designed to be incredibly simple and user-friendly, with a focu
 - A browser like [Chrome](https://www.google.com/chrome).
 
 ## Data
+
 ```mermaid
 erDiagram
+    STATE
+    TASK
+    FILTERS
+
+    STATE--TASK
+    TASK--FILTERS
 
 ```
 
