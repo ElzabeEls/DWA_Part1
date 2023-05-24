@@ -2,6 +2,8 @@
 
 import {state} from './state.js';
 
+console.log("It works");
+/*
 state.tasks['khgjhjgghgjgh'] = {
     completed: false,
     id: 'khgjhjgghgjgh',
@@ -10,3 +12,4 @@ state.tasks['khgjhjgghgjgh'] = {
     title: 'Eat food',
     urgency: 'low',
 };
+*/
