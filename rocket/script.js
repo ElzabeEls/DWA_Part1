@@ -1,11 +1,15 @@
+// @ts-check
+
+const CONVERSION_FACTOR = 4.44822;
+
 /**
- * Calculates the Mars Climate Orbiter thruster amount. Note that the provided value needs to be newton-seconds, and not pounds-seconds 
+ * Calculates the Mars Climate Orbiter thruster amount. Note that the provided value needs to be either newton-seconds or pounds-seconds (The conversion will happen automatically).
  * 
  * @param {object} props
  * @param {number} props.time - Time as measured in seconds
  * @param {object} props.force
  * @param {number} props.force.value - Force as measured in newton-seconds
- * @param {'newton-seconds'} props.force.measurement
+ * @param {'newton-seconds' | 'pound-seconds'} props.force.measurement
  * @returns {number}
  */
 
@@ -20,30 +24,22 @@ const calcThrust = (props) => {
     if (!value) throw new Error('"value" is required');
     if (!measurement) throw new Error('"measurement" is required');
 
-    if (measurement !== 'newton-seconds') {
-        throw new Error(`"measurement" is required to be "newtons-seconds", it is currently ${measurement}`);
+    if (!['newton-seconds', 'pound-seconds'].includes(measurement)) {
+        throw new Error(`"measurement" is required to be "newton-seconds" or "pound-seconds", it is currently ${measurement}`);
     };
 
-    return value * time;
+    const valueAsNewtonSeconds = measurement === 'newton-seconds' ?
+        value :
+        value * CONVERSION_FACTOR;
+    return valueAsNewtonSeconds * time;
 };
 
 const thurst = calcThrust({
     time: 10,
     force: {
         value: 50,
-        measurement: 'newton-seconds'
+        measurement: 'pound-seconds'
     }
 });
-/*
-const thurst = calcThrust({
-    time: 10,
-    force: {
-        value: 50,
-        measurement: 'newton-seconds'
-    }
-})
-
-
-*/
 
 console.log(thurst);
