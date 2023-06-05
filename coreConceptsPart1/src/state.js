@@ -16,7 +16,7 @@
  * @returns {string}
  */
 const createId = () => {
-return 'hello world';
+    return 'hello world';
 }
 
 /**
@@ -58,34 +58,4 @@ export const state = {
     }
 }
 
-/*
-const state = {
-    tasks: {
-        'zdaaadafdfsdfw': {
-            id: 'zdaaadafdfsdfw',
-            title: 'Wash dog',
-            completed: false,
-            created: new Date('1/1/2010'),
-            urgency: 'high',
-            due: new Date('1/1/2013'),
-        },
-        'klaklaerjljkere': {
-            id: 'klaklaerjljkere',
-            title: 'Clean car',
-            completed: true,
-            created: new Date('1/1/2011'),
-            urgency: 'medium',
-            due: null,
-        },
-    }
-}
 
-const statee = {
-    displaying: ['zdaaadafdfsdfw'],
-    filtes: {
-        search: '', // Clean
-        uregency: 'any', // 'low'/'medium'/'high'
-        sorting: 'Most recent',
-    }
-}
- */
