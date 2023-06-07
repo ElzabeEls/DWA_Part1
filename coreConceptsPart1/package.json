@@ -1,7 +1,7 @@
 {
   "name": "coreconceptspart1",
   "version": "1.0.0",
-  "description": "<!-- omit in toc --> # ✅ Todo App",
+  "description": "<!-- omit in toc --> # ✅ Core Concepts",
   "main": "index.js",
   "scripts": {
     "doc": "jsdoc -c jsdoc.json"
