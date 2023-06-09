@@ -33,6 +33,7 @@ const getHTML = (label) => {
 }
 
 const html = {
+    alert: getHTML("alert"),
     mode: {
         display: getHTML('mode-display'),
         button: getHTML('mode-button')
@@ -51,43 +52,91 @@ const html = {
  * @prop {boolean} locked
  */
 
+/**
+ * @type {data}
+ */
 const data = {
     intensity: "low",
     mode: "wide",
-    locked: false
+    locked: true
 };
 
-const toggleIntensity= () => {};
-const toggleMode = () => {};
-
-
-modeHtml.addEventListener("click", () => { });
-intensityHtml.addEventListener("click", () => { });
-
-
 const lockFunction = () => {
-    if (locked) throw new Error('Already locked');
-    locked = true;
+    if (data.locked) throw new Error('Already locked');
+    data.locked = true;
 
     return () => {
-        locked = false;
+        data.locked = false;
     }
 }
 
 const toggleMode = () => {
-    const unlock = lockFunction();
-    //...
-    setTimeout(() => {
+    try {
+        const unlock = lockFunction();
+        //...
+        setTimeout(
+            () => {
+                const newMode = data.mode === 'wide' ? "focus" : "wide";
+                data.mode = newMode;
+                html.mode.display.innerText = newMode;
+                unlock();
+            },
+            2000
+        );
+    } catch (error) {
+        html.alert.innerText = `Operation could not be performed, 
+        since another operation is currently in progress. 
+        Please try again in a few seconds. (${error.message})`;
+
+        const interval = setInterval(
+            () => {
+                if (!data.locked) {
+                    html.alert.innerText = '';
+                    clearInterval(interval);
+                }
+            },
+            1000
+        );
+    }
+}
+
+const toggleIntensity = () => {
+    try {
+        const unlock = lockFunction();
+        //...
+        const newIntensity = data.intensity === 'low' ? "high" : "low";
+        data.intensity = newIntensity;
+        html.intensity.display.innerText = newIntensity;
         unlock();
-    }, 2000)
-}
+    } catch (error) {
+        html.alert.innerText = `Operation could not be performed, 
+        since another operation is currently in progress. 
+        Please try again in a few seconds. (${error.message})`;
 
-const changeAmount = () => {
-    if (locked) throw new Error('Mode is being changed');
-    locked = true;
-    //...
-    locked = false;
-}
+        const interval = setInterval(
+            () => {
+                if (!data.locked) {
+                    html.alert.innerText = '';
+                    clearInterval(interval);
+                }
+            },
+            1000
+        );
+    }
+};
 
-toggleMode();
-changeAmount();
+html.intensity.button.addEventListener("click", toggleIntensity);
+html.mode.button.addEventListener("click", toggleMode);
+
+window.addEventListener('error', () => {
+    document.body.innerHTML = /* html */ `
+   Something critical went wrong on our side. Please restart and try again. 
+   If the issue persists please contact support.
+`;
+});
+
+html.intensity.display.innerText = data.intensity;
+html.mode.display.innerText = data.mode;
+data.locked = false;
+
+//next example ABSTRACTION:
